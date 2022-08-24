@@ -1,0 +1,11 @@
+.idea/
+.vscode/
+node_modules/
+build/
+tmp/
+temp/
+.env
+private.key
+public.key
+to_do.txt
+*.pdf
