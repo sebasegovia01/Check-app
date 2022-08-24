@@ -44,7 +44,36 @@ addresseeRouter.get(
   }
 );
 
-// GET adfresses by character addressee_name and client id
+// GET adressees by id
+addresseeRouter.get(
+  '/addressee/:id',
+  [checkJwt],
+  async (req: Request, res: Response) => {
+    const id: number = parseInt(req.params.id, 10);
+
+    if (isNaN(id)) {
+      res.status(400).json({ error: 'Ingrese un número valido como ID' });
+    } else {
+      try {
+        const addresses: IAddressee =
+          await addressee_service.findByID(id);
+
+        if (addresses) {
+          return res.status(200).send(addresses);
+        } else {
+          res.status(404).json({});
+        }
+      } catch (e: any) {
+        console.log('[GET ERROR] ' + e.message);
+        res
+          .status(500)
+          .json({ error: 'Error interno al obtener usuario', status: 500 });
+      }
+    }
+  }
+);
+
+// GET adresses by addressee characters name and client id
 addresseeRouter.get(
   '/addressees/search/:client_id/:addressee_name',
   [checkJwt],

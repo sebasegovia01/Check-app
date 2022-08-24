@@ -27,13 +27,19 @@ class AdresseeService {
     return adressees;
   };
 
+  public findByID = async (id: number): Promise<IAddressee> => {
+    let adressee: IAddressee = await this.connection.findOneBy(AdresseeEntity, { id: id });
+
+    return adressee;
+  };
+
   public searchClientByName = async (
     client_id: number,
     character_name: string
   ): Promise<IAddressee[]> => {
-    let adressees: IAddressee[] = await this.connection.findBy(AdresseeEntity, {
-      id_cliente: client_id,
-      nombre: Like(`%${character_name}%`),
+    let adressees: IAddressee[] = await this.connection.find(AdresseeEntity, {
+      select: ['id', 'nombre'],
+      where: {id_cliente: client_id, nombre: Like(`%${character_name}%`)},
     });
 
     return adressees;
