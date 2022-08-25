@@ -9,6 +9,7 @@ import { usersRouter } from './routes/client.router';
 import { authRouter } from './routes/auth.router';
 import { addresseeRouter } from './routes/adressee.router';
 import { transferRouter } from './routes/transfer.router';
+import { accountTypeRouter } from './routes/account_type.router';
 
 dotenv.config();
 
@@ -36,7 +37,14 @@ AppDataSource.initialize()
 
     const base_path = '/api_check/v1';
 
-    app.use(base_path, usersRouter, authRouter, addresseeRouter, transferRouter);
+    app.use(
+      base_path,
+      usersRouter,
+      authRouter,
+      addresseeRouter,
+      transferRouter,
+      accountTypeRouter
+    );
     app.use(errorHandler);
     app.use(notFoundHandler);
 
