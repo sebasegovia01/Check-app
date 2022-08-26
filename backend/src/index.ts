@@ -32,7 +32,7 @@ AppDataSource.initialize()
      */
 
     app.use(helmet());
-    app.use(cors());
+    app.use(cors({credentials: true, origin: ['http://localhost:8081']}));
     app.use(express.json());
 
     const base_path = '/api_check/v1';

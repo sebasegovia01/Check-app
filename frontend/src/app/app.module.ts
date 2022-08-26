@@ -9,6 +9,9 @@ import { AddAddresseeComponent } from './components/add-addressee/add-addressee.
 import { LoginComponent } from './components/login/login.component';
 import { DoTransferComponent } from './components/do-transfer/do-transfer.component';
 import { TransfersListComponent } from './components/transfers-list/transfers-list.component';
+import { HomeComponent } from './components/home/home.component';
+import { httpInterceptorProviders } from './__helpers/http.interceptor';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +19,9 @@ import { TransfersListComponent } from './components/transfers-list/transfers-li
     AddAddresseeComponent,
     LoginComponent,
     DoTransferComponent,
-    TransfersListComponent
+    TransfersListComponent,
+    HomeComponent,
+    NavbarComponent
   ],
   imports: [
     FormsModule,
@@ -24,7 +29,7 @@ import { TransfersListComponent } from './components/transfers-list/transfers-li
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -17,7 +17,7 @@ const addressee_service: AdresseeService = new AdresseeService();
 
 // GET adressees by client id
 addresseeRouter.get(
-  '/addressees/:client_id',
+  '/addressees/client/:client_id',
   [checkJwt],
   async (req: Request, res: Response) => {
     const client_id: number = parseInt(req.params.client_id, 10);
@@ -46,7 +46,7 @@ addresseeRouter.get(
 
 // GET adressees by id
 addresseeRouter.get(
-  '/addressee/:id',
+  '/addressees/:id',
   [checkJwt],
   async (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id, 10);
