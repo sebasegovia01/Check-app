@@ -1,22 +1,89 @@
-<div>
-  <nav class="navbar navbar-expand navbar-dark bg-dark">
-    <a routerLink="/" class="navbar-brand">{{title}}</a>
-    <div class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a routerLink="/" class="nav-link">Principal</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="/destinatarios/crear" class="nav-link">Nuevo destinatario</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="/transferencias/crear" class="nav-link">Transferir</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="/historial" class="nav-link">Historial</a>
-      </li>
-      <li class="flex-end">
-        <a routerLink="/login" class="nav-link">Cerrar sesión</a>
-      </li>
+<ng-container>
+<div class="container-scroller">
+  <!-- partial:partials/_navbar.html -->
+  <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+        <h3>Mi Banco</h3>
+    </div>
+    <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+      <!-- <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+        <span class="icon-menu"></span>
+      </button> -->
+      <ul class="navbar-nav navbar-nav-right" style="z-index: 9999 !important;">
+        <li class="nav-item nav-profile dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="profileDropdown" (click)="displaySettings()" style="cursor: pointer">
+            <img src="../../../assets/images/faces/face1.jpg" alt="profile"/>
+          </a>
+          <div id="settings-menu" class="dropdown-menu dropdown-menu-right navbar-dropdown">
+            <a class="dropdown-item">
+              <i class="ti-settings text-primary"></i>
+              Perfil
+            </a>
+            <a class="dropdown-item" routerLink="/logout">
+              <i class="ti-power-off text-primary"></i>
+              Cerrar sesión
+            </a>
+          </div>
+        </li>
+      </ul>
+      <!-- sidebar right -->
+      <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" (click)="displayRightSideBar()">
+        <span class="icon-menu"></span>
+      </button>
+      <!-- end - sidebar right -->
     </div>
   </nav>
+  <!-- partial -->
+  <div class="container-fluid page-body-wrapper">
+    <!-- partial:partials/_sidebar.html -->
+    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+      <ul class="nav">
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="/home">
+            <i class="icon-grid menu-icon"></i>
+            <span class="menu-title">Principal</span>
+          </a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="/destinatarios/crear">
+            <i class="icon-grid menu-icon"></i>
+            <span class="menu-title">Nuevo destinatario</span>
+          </a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="/transferencias/crear">
+            <i class="icon-grid menu-icon"></i>
+            <span class="menu-title">Transferir</span>
+          </a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="/historial">
+            <i class="icon-grid menu-icon"></i>
+            <span class="menu-title">Historial</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- partial -->
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <!--  view  -->
+         <ng-content></ng-content>
+        <!-- view  -->
+      </div>
+      <!-- content-wrapper ends -->
+      <!-- footer -->
+      <footer class="footer">
+        <div class="d-sm-flex justify-content-center justify-content-sm-between">
+          <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2022.  Plantilla patrocinada por: <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a>. Derechos reservados.</span>
+          <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hecho con <i class="ti-heart text-danger ml-1"></i>&nbsp; para desafío tecnico Check</span>
+        </div>
+      </footer> 
+      <!-- partial -->
+    </div>
+    <!-- main-panel ends -->
+  </div>   
+  <!-- page-body-wrapper ends -->
 </div>
+<!-- container-scroller -->
+</ng-container>

@@ -1,1 +1,14 @@
-@import "~bootstrap/dist/css/bootstrap.css";
+/*@import "~bootstrap/dist/css/bootstrap.css";*/
+
+/* static files */
+@import "./assets/vendors/feather/feather.css";
+@import "./assets/vendors/ti-icons/css/themify-icons.css";
+@import "./assets/vendors/css/vendor.bundle.base.css";
+/* injecte:css */
+@import "./assets//css/vertical-layout-light/style.css";
+
+/* regular style toast*/
+@import "~ngx-toastr/toastr";
+
+/* select2 */
+@import "~@ng-select/ng-select/themes/default.theme.css";

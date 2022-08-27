@@ -8,12 +8,9 @@ const API_URL = 'http://localhost:7000/api_check/v1/transfers';
 
 const storageService = new StorageService();
  
-const headers = new HttpHeaders({
-  'Content-Type': 'application/json',
-  'Authorization': `Bearer ${storageService.getClientSession().token || undefined}`
-});
-
-const requestOptions = { headers: headers };
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 
 @Injectable({
@@ -29,7 +26,7 @@ export class TransferService {
   }
 
   public getAllByClientId(client_id: number): Observable<Transfer[]> {
-    return this.http.get<Transfer[]>(`${API_URL}/${client_id}`, requestOptions);
+    return this.http.get<Transfer[]>(`${API_URL}/${client_id}`, httpOptions);
   }
 
 }

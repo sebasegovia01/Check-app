@@ -8,12 +8,9 @@ const API_URL = 'http://localhost:7000/api_check/v1/clients';
 
 const storageService = new StorageService();
  
-const headers = new HttpHeaders({
-  'Content-Type': 'application/json',
-  'Authorization': `Bearer ${storageService.getClientSession().token || undefined}`
-});
-
-const requestOptions = { headers: headers };
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +23,7 @@ export class ClientService {
   }
 
   public getClient(id: number): Observable<Client> {
-    return this.http.get<Client>(`${API_URL}/${id}`, requestOptions);
+    return this.http.get<Client>(`${API_URL}/${id}`, httpOptions);
   }
 
 

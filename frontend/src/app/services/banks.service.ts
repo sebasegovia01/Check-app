@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Bank } from '../models/bank.model';
 
 const API_BANKS_URL = 'https://bast.dev/api/banks.php';
 

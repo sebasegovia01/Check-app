@@ -8,14 +8,9 @@ const API_URL = 'http://localhost:7000/api_check/v1/addressees';
 
 const storageService = new StorageService();
 
-const headers = new HttpHeaders({
-  'Content-Type': 'application/json',
-  Authorization: `Bearer ${
-    storageService.getClientSession().token || undefined
-  }`,
-});
-
-const requestOptions = { headers: headers };
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root',
@@ -31,14 +26,14 @@ export class AddresseeService {
   public search(id: number, character_name: string): Observable<Addressee> {
     return this.http.get<Addressee>(
       `${API_URL}/search/${id}/${character_name}`,
-      requestOptions
+      httpOptions
     );
   }
 
-  public getAllByClientId(client_id: number): Observable<Addressee> {
-    return this.http.get<Addressee>(`${API_URL}/${client_id}`, requestOptions);
+  public getAllByClientId(client_id: number): Observable<Addressee[]> {
+    return this.http.get<Addressee[]>(`${API_URL}/client/${client_id}`, httpOptions);
   }
   public getById(id: number): Observable<Addressee> {
-    return this.http.get<Addressee>(`${API_URL}/${id}`, requestOptions);
+    return this.http.get<Addressee>(`${API_URL}/${id}`, httpOptions);
   }
 }

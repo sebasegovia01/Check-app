@@ -28,7 +28,13 @@ class AdresseeService {
   };
 
   public findByID = async (id: number): Promise<IAddressee> => {
-    let adressee: IAddressee = await this.connection.findOneBy(AdresseeEntity, { id: id });
+    let adressee: IAddressee = await this.connection.findOne(AdresseeEntity, 
+      {
+        select: ['id', 'nombre', 'rut', 'telefono', 'correo', 'correlativo_nombre_banco', 
+                 'numero_cuenta', 'tipo_cuenta.tipo_cuenta'],
+        where: {id: id},
+        relations: ['tipo_cuenta'],
+      });
 
     return adressee;
   };

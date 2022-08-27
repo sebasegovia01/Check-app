@@ -1,58 +1,188 @@
 <app-navbar>
-</app-navbar>
-<div class="container">
-  <h5 class="card-title mt-2">Nuevo destinatario</h5>
-  <div class="card">
-    <div class="card-body">
-      <form>
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="inputEmail4">Rut</label>
-            <input type="email" class="form-control" id="inputEmail4">
-          </div>
-          <div class="form-group col-md-6">
-            <label for="inputPassword4">Nombre</label>
-            <input type="password" class="form-control" id="inputPassword4">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="inputAddress">Correo</label>
-          <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-        </div>
-        <div class="form-group">
-          <label for="inputAddress2">Address 2</label>
-          <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-        </div>
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="inputCity">City</label>
-            <input type="text" class="form-control" id="inputCity">
-          </div>
-          <div class="form-group col-md-4">
-            <label for="inputState">Bancos</label>
-            <select id="inputState" class="form-control">
-              <option value="" disabled default>
-                Selecciona un banco
-              </option>
-              <option *ngFor="let bank of banks" value="{{ bank.id }}">{{ bank.name }}</option>
-            </select>
-          </div>
-          <div class="form-group col-md-2">
-            <label for="inputZip">Zip</label>
-            <input type="text" class="form-control" id="inputZip">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="gridCheck">
-            <label class="form-check-label" for="gridCheck">
-              Check me out
-            </label>
-          </div>
-        </div>
-        <button type="submit" class="btn btn-primary">Sign in</button>
-      </form>
-    </div>
-  </div>
-</div>
+  <div class="row">
+    <div class="col-lg-10 col-md-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Nuevo Destinatario</h4>
+          <form 
+            class="form-sample"
+            name="form"
+            (ngSubmit)="f.form.valid && onSubmit()"
+            #f="ngForm"
+            novalidate
+            >
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Rut</label>
+                  <div class="col-sm-9">
+                    <input 
+                     type="text"
+                     class="form-control" 
+                     name="rut"
+                     [(ngModel)]="addressee.rut"
+                      required
+                      #rut="ngModel"
+                      [ngClass]="{ 'is-invalid': f.submitted && rut.errors || !validateRut()}"
+                      (focusout)="validateRut(); formatRut()"
+                      value="addressee.rut"
+                      (keypress)="onlyRutDigits($event)"
+                      placeholder="Sin puntos ni guión"
+                      maxlength="13"
+                     />
+                     <div *ngIf="rut.errors && f.submitted" class="invalid-feedback">
+                      Ingrese rut
+                    </div>
+                    <div *ngIf="!validateRut()" class="invalid-feedback">
+                      Ingrese un rut valido
+                    </div>
+                  </div>
 
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Nombre</label>
+                  <div class="col-sm-9">
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      name="nombre"
+                      [(ngModel)]="addressee.nombre"
+                       required
+                       #nombre="ngModel"
+                       [ngClass]="{ 'is-invalid': f.submitted && nombre.errors }"
+                       value="addressee.nombre"
+                       maxlength="50"
+                      />
+                      <div *ngIf="nombre.errors && f.submitted" class="invalid-feedback">
+                        Ingrese nombre
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Correo</label>
+                  <div class="col-sm-9">
+                    <input 
+                    type="email" 
+                    class="form-control" 
+                    name="correo"
+                    [(ngModel)]="addressee.correo"
+                     #correo="ngModel"
+                     value="addressee.correo"
+                     placeholder="(opcional)"
+                     [ngClass]="{ 'is-invalid': !isValidEmail()}"
+                     maxlength="64"
+                    />
+                    <div *ngIf="!isValidEmail()" class="invalid-feedback">
+                      Ingrese un correo valido
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Télefono</label>
+                  <div class="col-sm-9">
+                    <input 
+                    type="telefono" 
+                    class="form-control" 
+                    name="telefono"
+                    [(ngModel)]="addressee.telefono"
+                     #telefono="ngModel"
+                     value="addressee.telefono"
+                     placeholder="(opcional)"
+                     (keypress)="onlyNumbersPhone($event)"
+                     maxlength="24"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Banco</label>
+                  <div class="col-sm-9">
+                    <select 
+                      id="selectBank" 
+                      class="form-control"
+                      name="correlativo_nombre_banco"
+                      [(ngModel)]="addressee.correlativo_nombre_banco"
+                      required
+                      #correlativo_nombre_banco="ngModel"
+                       [ngClass]="{ 'is-invalid': f.submitted && correlativo_nombre_banco.errors }"
+                       value="addressee.correlativo_nombre_banco"
+                      >
+                      <option value="" disabled default>
+                        Selecciona un banco
+                      </option>
+                      <option *ngFor="let bank of banks" value="{{ bank.id }}">{{ bank.name }}</option>
+                    </select>
+                    <div *ngIf="correlativo_nombre_banco.errors && f.submitted" class="invalid-feedback">
+                      Seleccione un banco
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Tipo de cuenta</label>
+                  <div class="col-sm-9">
+                    <select 
+                      id="inputState"
+                      class="form-control"
+                      name="id_tipo_cuenta"
+                      [(ngModel)]="addressee.id_tipo_cuenta"
+                      required
+                      #id_tipo_cuenta="ngModel"
+                      [ngClass]="{ 'is-invalid': f.submitted && id_tipo_cuenta.errors }"
+                      value="addressee.id_tipo_cuenta"
+                      >
+                      <option value='undefined' disabled default>
+                        Selecciona tipo de cuenta
+                      </option>
+                      <option *ngFor="let account_type of accountTypes" value="{{ account_type.id }}">{{ account_type.tipo_cuenta }}</option>
+                    </select>
+                    <div *ngIf="id_tipo_cuenta.errors && f.submitted" class="invalid-feedback">
+                      Seleccione un tipo de cuenta
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">N° de cuenta</label>
+                  <div class="col-sm-9">
+                    <input 
+                     type="text"
+                     class="form-control" 
+                     name="numero_cuenta"
+                     [(ngModel)]="addressee.numero_cuenta"
+                      required
+                      #numero_cuenta="ngModel"
+                      [ngClass]="{ 'is-invalid': f.submitted && numero_cuenta.errors }"
+                      value="addressee.numero_cuenta"
+                      (keypress)="onlyNumbersAccountNumber($event)"
+                      maxlength="24"
+                     />
+                     <div *ngIf="numero_cuenta.errors && f.submitted" class="invalid-feedback">
+                      Ingrese n° de cuenta destinatario
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-primary">Crear</button>
+          </form>
+        </div>
+      </div>
+      </div>
+  </div>
+</app-navbar>

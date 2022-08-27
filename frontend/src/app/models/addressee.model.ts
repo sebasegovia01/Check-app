@@ -10,6 +10,7 @@ export class Addressee {
   cliente?: Client;
   id_cliente?: number;
   correlativo_nombre_banco?: string;
+  nombre_banco?: string;
   numero_cuenta?: string;
   tipo_cuenta?: AccountType;
   id_tipo_cuenta?: number;
