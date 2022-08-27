@@ -3,8 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Addressee } from '../models/addressee.model';
 import { StorageService } from './storage.service';
+import { environment } from 'src/environments/environment';
 
-const API_URL = 'http://localhost:7000/api_check/v1/addressees';
+const API_URL = `${environment.api_url}/addressees`;
 
 const storageService = new StorageService();
 

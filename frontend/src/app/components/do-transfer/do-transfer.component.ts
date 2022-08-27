@@ -44,7 +44,7 @@ export class DoTransferComponent implements OnInit {
     private bankService: BanksService,
     private transferService: TransferService,
     private ngConfig: NgSelectConfig,
-    private toastr: ToastrService,
+    private toastr: ToastrService
   ) {
     this.ngConfig.notFoundText = 'No se han encontrado destinatarios';
     this.client_id = this.storageService.getClientSession().client.id;
@@ -58,7 +58,6 @@ export class DoTransferComponent implements OnInit {
   }
 
   onSubmit(): void {
-
     this.transfer.monto = CurrencyParser.clpToNumber(this.transfer.monto);
 
     this.transferService.create(this.transfer).subscribe({
@@ -67,7 +66,7 @@ export class DoTransferComponent implements OnInit {
         this.toastr.success('Transferencia realizada con exito', 'Listo!', {
           timeOut: 1000,
         });
-        setInterval(this.redirect, 2000)
+        setInterval(this.redirect, 2000);
       },
       error: (e) => {
         this.toastr.error(
@@ -92,20 +91,43 @@ export class DoTransferComponent implements OnInit {
   }
 
   selectAddresse(): void {
-    this.addresseService.getById(this.selected_id).subscribe({
-      next: (addressee) => {
-        this.addressee = addressee;
-        this.setBankName(addressee.correlativo_nombre_banco || '');
-        this.transfer.id_cliente = this.client_id;
-        this.transfer.id_destinatario = addressee.id;
-        this.disabled_fields = false;
-      },
-      error: (e) => {
-        console.error(e);
-        
-        this.disabled_fields = true;
-      },
-    });
+    console.log('select address');
+    console.log();
+
+    if (this.selected_id > 0) {
+      this.addresseService.getById(this.selected_id).subscribe({
+        next: (addressee) => {
+          this.addressee = addressee;
+          this.setBankName(addressee.correlativo_nombre_banco || '');
+          this.transfer.id_cliente = this.client_id;
+          this.transfer.id_destinatario = addressee.id;
+          this.disabled_fields = false;
+        },
+        error: (e) => {
+          console.error(e);
+
+          this.disabled_fields = true;
+        },
+      });
+    } else {
+      this.cleanDetails();
+    }
+  }
+
+  private cleanDetails(): void {
+    this.addressee = {
+      id: 0,
+      rut: '',
+      nombre: '',
+      correo: '',
+      telefono: '',
+      correlativo_nombre_banco: '',
+      nombre_banco: '',
+      tipo_cuenta: undefined,
+      numero_cuenta: '',
+      id_cliente: 0,
+    };
+    this.disabled_fields = true;
   }
 
   private setBankName(bank_id: string): void {
@@ -148,6 +170,6 @@ export class DoTransferComponent implements OnInit {
   }
 
   private redirect(): void {
-    window.location.replace('/historial')
+    window.location.replace('/historial');
   }
 }

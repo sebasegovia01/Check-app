@@ -30,7 +30,6 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
     if (this.storageService.isLoggedIn()) {
       this.isLoggedIn = true;
       this.redirect();
@@ -49,25 +48,28 @@ export class LoginComponent implements OnInit {
         this.isLoggedIn = true;
 
         this.toastr.success('Ingreso exitoso', 'Bienvenido!', {
-          timeOut: 1000
+          timeOut: 1000,
         });
         this.welcome_message = 'Redireccionando...';
 
-        setInterval(this.redirect, 1000)
-
+        setInterval(this.redirect, 1000);
       },
       error: (err) => {
-
-        console.log("error");
+        console.log('error');
         console.log(err);
 
-        this.errorMessage = err.error.error;
-        this.isLoginFailed = true;
+        if (err.status === 404) {
+          this.toastr.error('Error interno al autentificar', '', {
+            timeOut: 2000,
+          });
+        } else {
+          this.errorMessage = err.error.error;
+          this.isLoginFailed = true;
 
-        this.toastr.error(this.errorMessage, 'Atención:', {
-          timeOut: 2000
-        });
-    
+          this.toastr.error(this.errorMessage, 'Error', {
+            timeOut: 2000,
+          });
+        }
       },
     });
   }
@@ -88,7 +90,6 @@ export class LoginComponent implements OnInit {
     let rut = this.form.rut;
 
     if (rut) {
-
       if (rut.length < 8) {
         return false;
       }
@@ -103,7 +104,7 @@ export class LoginComponent implements OnInit {
     }
     return true;
   }
-  
+
   formatRut(): string {
     let rut = this.form.rut;
 
@@ -125,5 +126,4 @@ export class LoginComponent implements OnInit {
   redirect(): void {
     window.location.replace('/');
   }
-
 }

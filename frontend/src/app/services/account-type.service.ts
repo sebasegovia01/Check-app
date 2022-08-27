@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AccountType } from '../models/account-type.model';
 import { StorageService } from './storage.service';
 
-const API_URL = 'http://localhost:7000/api_check/v1/account_types';
+const API_URL = `${environment.api_url}/account_types`;
 
 const storageService = new StorageService();
 

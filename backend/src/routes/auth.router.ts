@@ -33,7 +33,7 @@ authRouter.post('/clients/login', async (req: Request, res: Response) => {
       let isValid = await userService.validatePasword(password, client.password);
 
       if (!isValid) {
-        res.status(401).json({ error: 'Clave incorrecta' });
+        res.status(400).json({ error: 'Clave incorrecta' });
       } else {
         //sign JWT, valid for 1 hour
         let [token, expiration_time] = createToken(client.id, client.correo);

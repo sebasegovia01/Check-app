@@ -4,8 +4,9 @@ import { Observable } from 'rxjs';
 
 // services
 import { StorageService } from './storage.service';
+import { environment } from 'src/environments/environment';
 
-const AUTH_API = 'http://localhost:7000/api_check/v1/clients/login';
+const AUTH_API = `${environment.api_url}/clients/login`;
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -26,8 +27,6 @@ export class AuthService {
   logout(): void {
     
     this.storageService.clean();
-
-    console.log(this.storageService.isLoggedIn());
 
     if(!this.storageService.isLoggedIn()) {
       window.location.replace('/login')

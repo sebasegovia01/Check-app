@@ -3,8 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Transfer } from '../models/transfer.model';
 import { StorageService } from './storage.service';
+import { environment } from 'src/environments/environment';
 
-const API_URL = 'http://localhost:7000/api_check/v1/transfers';
+const API_URL = `${environment.api_url}/transfers`;
 
 const storageService = new StorageService();
  
