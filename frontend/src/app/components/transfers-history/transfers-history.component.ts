@@ -13,11 +13,11 @@ import CurrencyParser from 'src/app/__helpers/currencyParser';
 
 
 @Component({
-  selector: 'app-transfers-list',
-  templateUrl: './transfers-list.component.html',
-  styleUrls: ['./transfers-list.component.css'],
+  selector: 'app-transfers-history',
+  templateUrl: './transfers-history.component.html',
+  styleUrls: ['./transfers-history.component.css'],
 })
-export class TransfersListComponent implements OnInit {
+export class TransfersHistoryComponent implements OnInit {
   transfers: Transfer[] = [];
   //transfer: Transfer = {};
   client_id: number = 0;

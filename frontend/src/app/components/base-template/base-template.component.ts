@@ -1,15 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css'],
+  selector: 'app-base-template',
+  templateUrl: './base-template.component.html',
+  styleUrls: ['./base-template.component.css'],
 })
-export class NavbarComponent implements OnInit {
+export class BaseTemplateComponent implements OnInit {
   title: string = 'Mi Banco';
 
-  constructor(private activatedroute: ActivatedRoute) {}
+  constructor(
+    private activatedroute: ActivatedRoute,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe((data) => {
@@ -39,22 +43,7 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  activeElement(e: any): void {
-    let nav_item_class = document.getElementsByClassName('nav-item');
-
-    let new_active_item = e.path;
-
-    for (var i = 0; i < nav_item_class.length; i++) {
-      nav_item_class[i].classList.remove('active');
-    }
-
-    //new_active_item.parentElement.parentElement
-    //new_active_item.classList.add('active')
-    console.log(new_active_item[1]);
+  logout(): void {
+    this.authService.logout();
   }
-
-  findAncestor (el: any, cls: any) {
-    while ((el = el.parentElement) && !el.classList.contains(cls));
-    return el;
-}
 }

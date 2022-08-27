@@ -8,23 +8,25 @@ import { AppComponent } from './app.component';
 import { AddAddresseeComponent } from './components/add-addressee/add-addressee.component';
 import { LoginComponent } from './components/login/login.component';
 import { DoTransferComponent } from './components/do-transfer/do-transfer.component';
-import { TransfersListComponent } from './components/transfers-list/transfers-list.component';
+import { TransfersHistoryComponent } from './components/transfers-history/transfers-history.component';
 import { HomeComponent } from './components/home/home.component';
 import { httpInterceptorProviders } from './__helpers/http.interceptor';
-import { NavbarComponent } from './components/navbar/navbar.component';
+import { BaseTemplateComponent } from './components/base-template/base-template.component';
 import {ToastrModule,} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { DatePipe } from '@angular/common';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    NavbarComponent,
+    BaseTemplateComponent,
     HomeComponent,
     AddAddresseeComponent,
     DoTransferComponent,
-    TransfersListComponent,
+    TransfersHistoryComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserAnimationsModule,

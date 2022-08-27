@@ -31,21 +31,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.activatedroute.data.subscribe((data) => {
-
-        if(data['logout']){
-          this.storageService.clean();
-          this.isLoggedIn = false;
-          this.toastr.success('Se ha cerrado la sesión', '', {
-            timeOut: 2000
-          });
-        }
-
-    });
-
     if (this.storageService.isLoggedIn()) {
       this.isLoggedIn = true;
       this.redirect();
+    } else {
+      this.isLoggedIn = false;
     }
   }
 
