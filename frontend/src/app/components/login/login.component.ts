@@ -82,26 +82,54 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  onlyRutDigits(evt: any): boolean {
+    var ASCIICode = evt.which ? evt.which : evt.keyCode;
+
+    if (
+      ASCIICode > 31 &&
+      (ASCIICode < 48 || ASCIICode > 57) &&
+      ASCIICode !== 107
+    )
+      return false;
+    return true;
+  }
+
+  validateRut(): boolean {
+    let rut = this.form.rut;
+
+    if (rut) {
+
+      if (rut.length < 8) {
+        return false;
+      }
+
+      if (rut.split('k').length - 1 > 1) {
+        return false;
+      }
+
+      if (rut.charAt(0) === 'k') {
+        return false;
+      }
+    }
+    return true;
+  }
+  
   formatRut(): string {
     let rut = this.form.rut;
 
-    if(rut) {
-
-      if (rut.match(/^(\d{2})(\d{3}){2}(\w{1})$/)) {
-        rut = rut.replace(/^(\d{2})(\d{3})(\d{3})(\w{1})$/, '$1.$2.$3-$4');
-      } else if (rut.match(/^(\d)(\d{3}){2}(\w{0,1})$/)) {
-        rut = rut.replace(/^(\d)(\d{3})(\d{3})(\w{0,1})$/, '$1.$2.$3-$4');
-      } else if (rut.match(/^(\d)(\d{3})(\d{0,2})$/)) {
-        rut = rut.replace(/^(\d)(\d{3})(\d{0,2})$/, '$1.$2.$3');
-      } else if (rut.match(/^(\d)(\d{0,2})$/)) {
-        rut = rut.replace(/^(\d)(\d{0,2})$/, '$1.$2');
-      }
-  
-      this.form.rut = rut;
-  
+    if (rut?.match(/^(\d{2})(\d{3}){2}(\w{1})$/)) {
+      rut = rut.replace(/^(\d{2})(\d{3})(\d{3})(\w{1})$/, '$1.$2.$3-$4');
+    } else if (rut?.match(/^(\d)(\d{3}){2}(\w{0,1})$/)) {
+      rut = rut?.replace(/^(\d)(\d{3})(\d{3})(\w{0,1})$/, '$1.$2.$3-$4');
+    } else if (rut?.match(/^(\d)(\d{3})(\d{0,2})$/)) {
+      rut = rut?.replace(/^(\d)(\d{3})(\d{0,2})$/, '$1.$2.$3');
+    } else if (rut?.match(/^(\d)(\d{0,2})$/)) {
+      rut = rut?.replace(/^(\d)(\d{0,2})$/, '$1.$2');
     }
 
-    return rut;
+    this.form.rut = rut;
+
+    return this.form.rut || '';
   }
 
   redirect(): void {

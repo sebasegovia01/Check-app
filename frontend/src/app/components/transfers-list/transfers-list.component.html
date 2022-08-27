@@ -3,10 +3,43 @@
     <div class="col-md-12 grid-margin stretch-card">
       <div class="card">
         <div class="card-body">
-          <p class="card-title">Historial</p>
+          <p class="card-title">Historial de transferencias</p>
           <div class="row">
             <div class="col-12">
-                 
+              <div class="table-responsive pt-3">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>
+                        Nombre
+                      </th>
+                      <th>
+                        Rut
+                      </th>
+                      <th>
+                        Banco
+                      </th>
+                      <th>
+                        Tipo de cuenta
+                      </th>
+                      <th>
+                        Monto
+                      </th>
+                      <th>Fecha</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                     <tr *ngFor="let transfer of transfers">
+                      <td>{{transfer.destinatario?.nombre}}</td>
+                      <td>{{transfer.destinatario?.rut}}</td>
+                      <td>{{transfer.nombre_banco}}</td>
+                      <td>{{transfer.destinatario?.tipo_cuenta?.tipo_cuenta}}</td>
+                      <td>{{transfer.monto}}</td>
+                      <td>{{transfer.created_at}}</td>
+                     </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
           </div>

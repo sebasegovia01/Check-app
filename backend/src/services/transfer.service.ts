@@ -37,6 +37,10 @@ class TransferService {
   public create = async (transfer: IBaseTransfer): Promise<number> => {
     const new_transfer = new TransferEntity();
 
+
+    console.log("new transfer");
+    console.log(transfer);
+
     new_transfer.id_destinatario = transfer.id_destinatario;
     new_transfer.monto = transfer.monto;
     new_transfer.comentario = transfer.comentario;

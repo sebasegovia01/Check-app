@@ -28,31 +28,48 @@
               Ingrese un destinatario
             </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" *ngIf="addressee.id != 0">
               <label for="exampleInputName1"><b> Detalle del destinatario</b></label>
-              <p>Nombre: {{addressee.nombre}}</p>
-              <p>Correo: {{addressee.correo || "Sin correo definido"}}</p>
-              <p>Banco: {{addresses?.nombre_banco || ""}}</p>
-              <p>Tipo de cuenta: {{addressee.tipo_cuenta?.tipo_cuenta || ""}}</p>
+                <p><b>Nombre:</b> {{addressee.nombre}}</p>
+                <p><b>Correo:</b> {{addressee.correo || "Sin correo definido"}}</p>
+                <p><b>Banco:</b> {{addresses?.nombre_banco || ""}}</p>
+                <p><b>Tipo de cuenta:</b> {{addressee.tipo_cuenta?.tipo_cuenta || ""}}</p>
             </div>
             <div class="form-group">
               <label for="exampleInputName1">Monto</label>
               <input 
-                type="text" 
+                type="text"
                 class="form-control" 
-                id="monto" 
+                name="monto"
+                id="monto"
+                [(ngModel)]="transfer.monto"
+                required
+                #monto="ngModel"
                 placeholder="Pesos Chilenos"
-                disabled="{{disabled_fields ? 'disabled' : ''}}"
+                readonly="{{disabled_fields ? 'disabled' : ''}}"
+                [ngClass]="{ 'is-invalid': f.submitted && monto.errors || !minimumAmount()}"
+                (focusout)="minimumAmount();"
+                
+                maxlength="11"
                 >
+                <div *ngIf="monto.errors && f.submitted" class="invalid-feedback">
+                  <div *ngIf="monto.errors['required']">Ingrese Monto</div>
+                </div>
+                <div *ngIf="!minimumAmount()" class="invalid-feedback">
+                  Monto mínimo de transferencia $1.000
+                </div>
             </div>
             <div class="form-group">
               <label for="exampleInputName1">Comentario</label>
               <input 
                 type="text" 
                 class="form-control" 
-                id="comentario" 
+                name="comentario"
+                id="comentario"
+                [(ngModel)]="transfer.comentario"
                 placeholder="Opcional"
-                disabled="{{disabled_fields ? 'disabled' : ''}}"
+                readonly="{{disabled_fields ? 'disabled' : ''}}"
+                maxlength="30"
                 >
             </div>
             <button 

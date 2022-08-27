@@ -3,11 +3,12 @@ import { Client } from './client.model';
 
 export class Transfer {
   id?: number;
-  monto?: number;
+  monto?: any;
   id_destinatario?: number;
   destinatario?: Addressee;
   comentario?: string;
-  created_at?: Date;
+  created_at?: any;
   id_cliente?: number;
   cliente?: Client;
+  nombre_banco?: string;
 }
