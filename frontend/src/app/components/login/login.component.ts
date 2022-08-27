@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
 
     this.activatedroute.data.subscribe((data) => {
+
         if(data['logout']){
           this.storageService.clean();
           this.isLoggedIn = false;

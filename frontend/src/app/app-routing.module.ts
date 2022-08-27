@@ -35,11 +35,6 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    data: {title: 'Mi Banco'}
-  },
-  {
-    path: 'logout',
-    component: LoginComponent,
     data: {logout: true}
   },
 
