@@ -35,7 +35,7 @@ AppDataSource.initialize()
      */
 
     app.use(helmet());
-    app.use(cors({credentials: true, origin: [`${FRONT_HOST}:${FRONT_PORT}`]}));
+    app.use(cors({credentials: true, origin: FRONT_HOST}));
     app.use(express.json());
 
     const base_path = '/api_check/v1';
