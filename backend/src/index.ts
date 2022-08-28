@@ -19,11 +19,14 @@ AppDataSource.initialize()
      * App Variables
      */
 
-    if (!process.env.SERVER_PORT) {
+    if (!process.env.PORT) {
       process.exit(1);
     }
 
-    const PORT: number = parseInt(process.env.SERVER_PORT as string, 10);
+    const PORT: number = parseInt(process.env.PORT as string, 10);
+    const HOST: string = process.env.HOST;
+    const FRONT_HOST: string = process.env.FRONT_HOST;
+    const FRONT_PORT: number = parseInt(process.env.FRONT_PORT as string, 10);
 
     const app = express();
 
@@ -32,7 +35,7 @@ AppDataSource.initialize()
      */
 
     app.use(helmet());
-    app.use(cors({credentials: true, origin: ['http://localhost:8081']}));
+    app.use(cors({credentials: true, origin: [`${FRONT_HOST}:${FRONT_PORT}`]}));
     app.use(express.json());
 
     const base_path = '/api_check/v1';
@@ -52,8 +55,8 @@ AppDataSource.initialize()
      * Server Activation
      */
 
-    app.listen(PORT, () => {
-      console.log(`Server running: http://localhost:${PORT + base_path}`);
+    app.listen(PORT || 7000, () => {
+      console.log(`Server running: ${HOST}:${PORT + base_path}`);
     });
   })
   .catch((error) => console.log('[DATABASE ERROR]: ' + error));
