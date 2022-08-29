@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 // services
 import { AuthService } from 'src/app/services/auth.service';
 import { StorageService } from 'src/app/services/storage.service';
 // alerts
 import { ToastrService } from 'ngx-toastr';
+
+const default_button_text = "Ingresar";
 
 @Component({
   selector: 'app-login',
@@ -17,13 +18,14 @@ export class LoginComponent implements OnInit {
     password: null,
   };
 
-  isLoggedIn = false;
-  isLoginFailed = false;
-  errorMessage = '';
-  welcome_message = 'Inicia sesión en el portal para continuar.';
+  isLoggedIn: boolean = false;
+  isLoginFailed: boolean = false;
+  errorMessage: string = '';
+  welcome_message: string = 'Inicia sesión en el portal para continuar.';
+  button_text: string = default_button_text;
+  disabled_button: boolean = false;
 
   constructor(
-    private activatedroute: ActivatedRoute,
     private authService: AuthService,
     private storageService: StorageService,
     private toastr: ToastrService
@@ -40,12 +42,16 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     const { rut, password } = this.form;
+    this.disabled_button = true;
+    this.button_text = "Iniciando sesión..."
 
     this.authService.auth(rut, password).subscribe({
       next: (data) => {
         this.storageService.storeClientSession(data);
         this.isLoginFailed = false;
         this.isLoggedIn = true;
+        this.disabled_button = false;
+        this.button_text = default_button_text;
 
         this.toastr.success('Ingreso exitoso', 'Bienvenido!', {
           timeOut: 1000,
@@ -57,6 +63,8 @@ export class LoginComponent implements OnInit {
       error: (err) => {
         console.log('error');
         console.log(err);
+        this.disabled_button = false;
+        this.button_text = default_button_text;
 
         if (err.status === 404) {
           this.toastr.error('Error interno al autentificar', '', {

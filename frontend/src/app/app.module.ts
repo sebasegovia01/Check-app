@@ -16,6 +16,7 @@ import {ToastrModule,} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { DatePipe } from '@angular/common';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import {NgxSkeletonLoaderModule} from 'ngx-skeleton-loader';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     NotFoundComponent,
   ],
   imports: [
+    NgxSkeletonLoaderModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     NgSelectModule,

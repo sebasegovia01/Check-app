@@ -13,6 +13,8 @@ import { TransferService } from 'src/app/services/transfer.service';
 import { ToastrService } from 'ngx-toastr';
 import CurrencyParser from 'src/app/__helpers/currencyParser';
 
+const default_button_text = 'Transferir';
+
 @Component({
   selector: 'app-do-transfer',
   templateUrl: './do-transfer.component.html',
@@ -36,7 +38,9 @@ export class DoTransferComponent implements OnInit {
     id_cliente: 0,
   };
   disabled_fields: boolean = true;
+  button_text: string = default_button_text;
   transfer: Transfer = {};
+  loading_details: boolean = false;
 
   constructor(
     private storageService: StorageService,
@@ -58,17 +62,23 @@ export class DoTransferComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.button_text = 'Transfiriendo...';
+    this.disabled_fields = true;
+
     this.transfer.monto = CurrencyParser.clpToNumber(this.transfer.monto);
 
     this.transferService.create(this.transfer).subscribe({
       next: (res) => {
-        console.log(res);
+        this.button_text = default_button_text;
+        this.disabled_fields = false;
         this.toastr.success('Transferencia realizada con exito', 'Listo!', {
           timeOut: 1000,
         });
         setInterval(this.redirect, 2000);
       },
       error: (e) => {
+        this.button_text = default_button_text;
+        this.disabled_fields = false;
         this.toastr.error(
           'Error interno al intentar realizar transferencia. Intente nuevamente en algunos minutos',
           'Error',
@@ -91,8 +101,9 @@ export class DoTransferComponent implements OnInit {
   }
 
   selectAddresse(): void {
-    console.log('select address');
-    console.log();
+
+    this.addressee.id = 0;
+    this.loading_details = true;
 
     if (this.selected_id > 0) {
       this.addresseService.getById(this.selected_id).subscribe({
@@ -102,10 +113,11 @@ export class DoTransferComponent implements OnInit {
           this.transfer.id_cliente = this.client_id;
           this.transfer.id_destinatario = addressee.id;
           this.disabled_fields = false;
+          this.loading_details = false;
         },
         error: (e) => {
           console.error(e);
-
+          this.loading_details = false;
           this.disabled_fields = true;
         },
       });
@@ -128,6 +140,7 @@ export class DoTransferComponent implements OnInit {
       id_cliente: 0,
     };
     this.disabled_fields = true;
+    this.loading_details = false;
   }
 
   private setBankName(bank_id: string): void {

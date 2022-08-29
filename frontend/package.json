@@ -25,6 +25,7 @@
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "jquery": "^3.6.1",
+    "ngx-skeleton-loader": "^6.0.0",
     "ngx-toastr": "^15.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

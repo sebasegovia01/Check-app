@@ -11,13 +11,13 @@ import { AccountTypeService } from 'src/app/services/account-type.service';
 import { AddresseeService } from 'src/app/services/addressee.service';
 import { ToastrService } from 'ngx-toastr';
 
+const default_button_text = 'Crear';
+
 @Component({
   selector: 'app-add-addressee',
   templateUrl: './add-addressee.component.html',
   styleUrls: ['./add-addressee.component.css'],
 })
-
-
 export class AddAddresseeComponent implements OnInit {
   banks?: Bank[];
   accountTypes?: AccountType[];
@@ -33,6 +33,8 @@ export class AddAddresseeComponent implements OnInit {
     id_cliente: 0,
   };
   private submitted = false;
+  button_text = default_button_text;
+  disabled_button = false;
 
   constructor(
     private storageService: StorageService,
@@ -54,25 +56,30 @@ export class AddAddresseeComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.disabled_button = true;
+    this.button_text = 'Creando destinatario...';
 
     this.addresseeService.create(this.addressee).subscribe({
       next: (res) => {
-        console.log(res);
+        this.disabled_button = false;
+        this.button_text = default_button_text;
         this.submitted = true;
-
         this.toastr.success('Destinatario creado exitosamente', 'Listo!', {
           timeOut: 1000,
         });
 
-        setInterval(this.reloadPage, 2000)
-
+        setInterval(this.reloadPage, 2000);
       },
-      error: (e) => console.error(e),
+      error: (e) => {
+        this.disabled_button = false;
+        this.button_text = default_button_text;
+        console.error(e);
+      },
     });
   }
 
   private reloadPage(): void {
-      window.location.reload();
+    window.location.reload();
   }
 
   private fillBanks(): void {
@@ -140,7 +147,6 @@ export class AddAddresseeComponent implements OnInit {
     let rut = this.addressee.rut;
 
     if (rut) {
-
       if (rut.length < 8) {
         return false;
       }

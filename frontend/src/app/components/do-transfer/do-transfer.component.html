@@ -28,12 +28,27 @@
               Ingrese un destinatario
             </div>
             </div>
-            <div class="form-group" *ngIf="addressee.id != 0">
-              <label for="exampleInputName1"><b> Detalle del destinatario</b></label>
+            <div class="form-group">
+            </div>
+            <div class="form-group">
+              <div *ngIf="addressee.id != 0">
+                <label for="exampleInputName1"><b> Detalle del destinatario</b></label>
                 <p><b>Nombre:</b> {{addressee.nombre}}</p>
                 <p><b>Correo:</b> {{addressee.correo || "Sin correo definido"}}</p>
                 <p><b>Banco:</b> {{addresses?.nombre_banco || ""}}</p>
                 <p><b>Tipo de cuenta:</b> {{addressee.tipo_cuenta?.tipo_cuenta || ""}}</p>
+              </div>
+              <div *ngIf="loading_details">
+                <ngx-skeleton-loader 
+                count="5" 
+                appearance="line"
+                [theme]="{ 
+                  width: '50%',
+                  'display': 'flex'
+                }"
+                >
+              </ngx-skeleton-loader>
+              </div>
             </div>
             <div class="form-group">
               <label for="exampleInputName1">Monto</label>
@@ -76,7 +91,9 @@
               type="submit" 
               class="btn btn-primary mr-2"
               disabled="{{disabled_fields ? 'disabled' : ''}}"
-              >Transferir</button>
+              >
+              {{button_text}}
+              </button>
           </form>
         </div>
       </div>

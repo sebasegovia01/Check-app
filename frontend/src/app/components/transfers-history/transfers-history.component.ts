@@ -22,6 +22,7 @@ export class TransfersHistoryComponent implements OnInit {
   //transfer: Transfer = {};
   client_id: number = 0;
   banks: Bank[] = [];
+  loading_table: boolean = true;
 
   constructor(
     private storageService: StorageService,
